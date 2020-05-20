@@ -1,0 +1,27 @@
+---
+- hosts: local
+  connection: local
+  gather_facts: False
+  # vars:
+  #   instance_type: t2.micro
+  #   security_group: ansible_test_sg
+  #   image: ami-0323c3dd2da7fb37d
+  #   keypair: bharani_ansible
+  #   region: us-east-1
+  #   count: 1
+  vars_files:
+    - aws_keys.yml
+
+  tasks:
+
+      - name: Create Configuration Recorder for AWS Config
+        aws_config_recorder:
+          name: test_configuration_recorder
+          aws_access_key: "{{ aws_access_key }}"
+          aws_secret_key: "{{ aws_secret_key }}"
+          region: us-east-1
+          state: present
+          role_arn: 'service_linked_role/provide_role'
+          recording_group:
+              all_supported: true
+              include_global_types: true
