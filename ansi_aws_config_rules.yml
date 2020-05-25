@@ -1,0 +1,21 @@
+- name: start aws config rules configuration 
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars_files:
+    - aws_keys.yml
+
+  tasks:
+      - name: Create Config Rule for AWS Config
+        aws_config_rule:
+          name: test_config_rule
+          state: absent
+          description: 'This AWS Config rule checks for public write access on S3 buckets'
+          aws_access_key: "{{ aws_access_key }}"
+          aws_secret_key: "{{ aws_secret_key }}"
+          scope:
+              compliance_types:
+                  - 'AWS::EC2::Instance'
+          source:
+              owner: AWS
+              identifier: 'EC2_STOPPED_INSTANCE'

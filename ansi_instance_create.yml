@@ -1,5 +1,5 @@
----
-- hosts: local
+- name: Create an instance and deploy apache
+  hosts: localhost
   connection: local
   gather_facts: False
   vars:

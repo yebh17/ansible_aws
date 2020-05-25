@@ -1,7 +1,11 @@
-- hosts: local
+- name: Stop/terminate the instances
+  hosts: localhost
   connection: local
+  gather_facts: false
   vars:
     region: us-east-1
+    instance_ids:
+      - 'i-068af03a82be9c095'
   vars_files:
     - aws_keys.yml
   tasks:
@@ -15,11 +19,13 @@
       register: ec2
     - debug: var=ec2
 
-    - name: Terminate EC2 Instance(s)
+    - name: Stop/terminate the instances
       ec2:
-        instance_ids: '{{ item.instance_id }}'
-        state: absent
+        instance_ids: '{{ instance_ids }}'
+        state: absent #'stop' for stopping instances, 'absent' for terminating the instances
+        wait: True
         region: "{{ region }}"
         aws_access_key: "{{ aws_access_key }}"
         aws_secret_key: "{{ aws_secret_key }}"
-      with_items: "{{ ec2.instances }}"
+        vpc_subnet_id: subnet-b4bcd38a
+        assign_public_ip: yes

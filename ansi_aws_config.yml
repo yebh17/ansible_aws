@@ -1,20 +1,20 @@
----
-- hosts: local
+- name: start aws config recordings 
+  hosts: localhost
   connection: local
-  gather_facts: False
+  gather_facts: false
   vars_files:
     - aws_keys.yml
 
   tasks:
-
       - name: Create Configuration Recorder for AWS Config
         aws_config_recorder:
           name: test_configuration_recorder
-          aws_access_key: "{{ aws_access_key }}"
-          aws_secret_key: "{{ aws_secret_key }}"
           region: us-east-1
           state: present
-          role_arn: 'service_linked_role/provide_role'
+          # wait: True
+          aws_access_key: "{{ aws_access_key }}"
+          aws_secret_key: "{{ aws_secret_key }}"
+          role_arn: 'arn:aws:iam::973117937126:role/aws-service-role/config.amazonaws.com/AWSServiceRoleForConfig'
           recording_group:
               all_supported: true
               include_global_types: true
