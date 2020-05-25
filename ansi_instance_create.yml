@@ -48,12 +48,14 @@
           region: "{{ region }}"
           keypair: "{{ keypair }}"
           count: "{{count}}"
+          wait: yes
         register: ec2
 
       - name: Add the newly created host so that we can further contact it
         add_host:
           name: "{{ item.public_ip }}"
           groups: ansibleservers
+          groupname: running
         with_items: "{{ ec2.instances }}"
 
       - name: Add tag to Instance(s)
@@ -75,8 +77,9 @@
           state: started
         with_items: "{{ ec2.instances }}"
 
-- hosts: ansibleservers
-  remote_user: ubuntu
+- name: Deploy apache server
+  hosts: ansibleservers
+  remote_user: ec2-user
   become: yes
   gather_facts: no
   pre_tasks:

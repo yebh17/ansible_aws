@@ -14,7 +14,7 @@
           # wait: True
           aws_access_key: "{{ aws_access_key }}"
           aws_secret_key: "{{ aws_secret_key }}"
-          role_arn: 'arn:aws:iam::973117937126:role/aws-service-role/config.amazonaws.com/AWSServiceRoleForConfig'
+          role_arn: 'config_role'
           recording_group:
               all_supported: true
               include_global_types: true
