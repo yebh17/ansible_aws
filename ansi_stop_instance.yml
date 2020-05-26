@@ -5,7 +5,7 @@
   vars:
     region: us-east-1
     instance_ids:
-      - 'i-0e14f7416715db705'
+      - 'i-xxxxxxxxx'
   vars_files:
     - aws_keys.yml
   tasks:
@@ -27,5 +27,5 @@
         region: "{{ region }}"
         aws_access_key: "{{ aws_access_key }}"
         aws_secret_key: "{{ aws_secret_key }}"
-        vpc_subnet_id: subnet-b4bcd38a
+        vpc_subnet_id: subnet-xxxxxx
         assign_public_ip: yes
