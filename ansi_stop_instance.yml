@@ -5,7 +5,7 @@
   vars:
     region: us-east-1
     instance_ids:
-      - 'i-xxxxxxxxx'
+      - 'i-xxxxxxxx'
   vars_files:
     - aws_keys.yml
   tasks:
@@ -22,10 +22,10 @@
     - name: Stop/terminate the instances
       ec2:
         instance_ids: '{{ instance_ids }}'
-        state: absent #'stopped' for stopping instances, 'absent' for terminating the instances
+        state: running #'stopped' for stopping instances, 'absent' for terminating the instances, 'running' for restart the instance from stop mode
         wait: True
         region: "{{ region }}"
         aws_access_key: "{{ aws_access_key }}"
         aws_secret_key: "{{ aws_secret_key }}"
-        vpc_subnet_id: subnet-xxxxxx
+        vpc_subnet_id: subnet-xxxxxxx
         assign_public_ip: yes
