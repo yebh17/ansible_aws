@@ -1,0 +1,11 @@
+aws_old_cwa_package: 'awslogs-agent-setup'
+aws_new_cwa_temp_path: 'https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest'
+delete_awslogs_file1: '/var/awslogs'
+delete_awslogs_file2: '/etc/cron.d/awslogs*'
+delete_awslogs_file3: '/etc/init.d/awslogs'
+delete_awslogs_file4: '/var/log/awslogs*'
+delete_awslogs_file5: '/home/ubuntu/awslogs-agent-setup.py'
+aws_new_cwa_package: 'amazon-cloudwatch-agent'
+path_to_dir: '/opt/aws/amazon-cloudwatch-agent/bin/'
+collectd_version: "5.4.0-3ubuntu2"
+collectd_install_recommends: True

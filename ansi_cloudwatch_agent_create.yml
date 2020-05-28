@@ -1,0 +1,34 @@
+- name: Version upgrade of cloudwatch agent 
+  hosts: local
+  become: true
+  vars_files:
+    - cw_vars.yml
+
+  tasks:
+
+  - name: stop {{ aws_old_cwa_package }} 
+    command: service awslogs stop
+  
+  - name: uninstall older version awslogs configuration
+    shell: apt-get remove amazon-cloudwatch-agent -y
+
+  - name: remove all awslogs config and binary files from all sources
+    shell: rm -rf {{ delete_awslogs_file1 }} {{ delete_awslogs_file2 }} {{ delete_awslogs_file3 }} {{ delete_awslogs_file4 }} {{ delete_awslogs_file5 }}
+
+  - name: install new {{ aws_new_cwa_package }}
+    apt:
+     deb: "{{ aws_new_cwa_temp_path }}/{{ aws_new_cwa_package }}.deb"
+     state: present
+
+  - name: Install Collectd
+    apt: 
+      pkg=collectd
+      state=present
+    
+  - name: run the new cw-agent configuration
+    command: ./amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c ssm:AmazonCloudWatch-linux -s
+    args:
+      chdir: "{{ path_to_dir }}"
+
+
+
