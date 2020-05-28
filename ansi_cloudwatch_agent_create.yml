@@ -26,7 +26,7 @@
       state=present
     
   - name: run the new cw-agent configuration
-    command: ./amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c ssm:AmazonCloudWatch-linux -s   #This command works only if the "amazon-cloudwatch-agent.json" is present at AWS SSM.parameter store as "AmazonCloudWatch-linux"
+    command: ./amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c ssm:AmazonCloudWatch-linux -s   #This command works only if the "amazon-cloudwatch-agent.json" is present at AWS SSM.parameter store with a name as "AmazonCloudWatch-linux"
     args:
       chdir: "{{ path_to_dir }}"
 
